@@ -23,7 +23,8 @@ namespace UniqueWordCalculatorTestProject
         {
             UniqueWordsList = new Dictionary<string, int>();
             WordProcessing = new UniqueWordProcessing(UniqueWordsList);
-            WordReader = new FileUniqueWordReader(WordProcessing, DEFAULT_BUFFER_SIZE);
+            WordReader = new FileUniqueWordReader(WordProcessing);
+            WordReader.Buffer_Size = DEFAULT_BUFFER_SIZE;
         }
 
         public static Stream GenerateStreamFromString(string s)
@@ -42,7 +43,7 @@ namespace UniqueWordCalculatorTestProject
             TestWord = "Test1";
             stream = GenerateStreamFromString(TestWord);
             using (WordReader.FileManager = new StreamReader(stream))
-                WordReader.ParseFile();
+                WordReader.ParseFileAsync();
 
             Assert.AreEqual(1, UniqueWordsList.Count());
             Assert.AreEqual(true, UniqueWordsList.ContainsKey(TestWord));
@@ -55,7 +56,7 @@ namespace UniqueWordCalculatorTestProject
             WordProcessing.ProcessWord("Test1");
             stream = GenerateStreamFromString("  Test1   Test2   ");
             using (WordReader.FileManager = new StreamReader(stream))
-                WordReader.ParseFile();
+                WordReader.ParseFileAsync();
 
             Assert.AreEqual(2, UniqueWordsList.Count());
             Assert.AreEqual(true, UniqueWordsList.ContainsKey("Test1"));
