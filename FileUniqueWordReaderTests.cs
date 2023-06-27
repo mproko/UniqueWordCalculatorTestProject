@@ -64,8 +64,5 @@ namespace UniqueWordCalculatorTestProject
             Assert.AreEqual(true, UniqueWordsList.ContainsKey("Test2"));
             Assert.AreEqual(1, UniqueWordsList["Test2"]);
         }
-
-
-
     }
 }
